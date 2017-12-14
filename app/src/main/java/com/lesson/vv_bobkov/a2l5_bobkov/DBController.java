@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.lesson.vv_bobkov.a2l5_bobkov.Exceptions.DBCursorIsEmptyException;
 import com.lesson.vv_bobkov.a2l5_bobkov.Exceptions.DBCursorIsNullExceptions;
 import com.lesson.vv_bobkov.a2l5_bobkov.Exceptions.DBNewVersionLessOldExceptions;
 
@@ -27,7 +28,7 @@ class DBController {
     }
 
     void readeNoteWithTitleArrayListFromBd()
-            throws DBCursorIsNullExceptions, DBCursorIsEmpty {
+            throws DBCursorIsNullExceptions, DBCursorIsEmptyException {
         App.getmApp().setmNoteWithTitleList(NotesTable.createNoteWithTitleArrayListFromBd(mSqLiteDatabase));
     }
 

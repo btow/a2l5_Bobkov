@@ -16,5 +16,7 @@
     <string name="attantion">Attantion!!!</string>
     <string name="file_name">note_with_title_list</string>
     <string name="to_retry">To retry</string>
-    <string name="there_are_no_notes"><![CDATA[There are no notes.\n Click <+> on the bottom right to create.]]></string>
+    <string name="there_are_no_notes">There are no notes.\n Click \"+\" on the bottom right to create</string>
+    <string name="configure">Configure</string>
+    <string name="add_widget">Add widget</string>
 </resources>

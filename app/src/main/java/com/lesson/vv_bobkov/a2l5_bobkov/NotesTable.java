@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.lesson.vv_bobkov.a2l5_bobkov.Exceptions.DBCursorIsEmptyException;
 import com.lesson.vv_bobkov.a2l5_bobkov.Exceptions.DBCursorIsNullExceptions;
 import com.lesson.vv_bobkov.a2l5_bobkov.Exceptions.DBNewVersionLessOldExceptions;
 import com.lesson.vv_bobkov.a2l5_bobkov.Exceptions.DBRecordsDeletingExceptions;
@@ -96,14 +97,14 @@ class NotesTable {
     }
 
     public static ArrayList<NoteWithTitle> createNoteWithTitleArrayListFromBd(final SQLiteDatabase db)
-            throws DBCursorIsEmpty, DBCursorIsNullExceptions {
+            throws DBCursorIsEmptyException, DBCursorIsNullExceptions {
         Cursor cursor = db.query(TABLE_NAME, null, null, null, null, null, null);
         String excMsg = "The cursor is null";
         if (cursor == null) {
             throw new DBCursorIsNullExceptions(excMsg);
         } else if (cursor.getCount() < 1) {
             excMsg = "The cursor is empty";
-            throw new DBCursorIsEmpty(excMsg);
+            throw new DBCursorIsEmptyException(excMsg);
         }
         ArrayList<NoteWithTitle> noteWithTitleList = new ArrayList<>();
         if (cursor.moveToFirst()) {
