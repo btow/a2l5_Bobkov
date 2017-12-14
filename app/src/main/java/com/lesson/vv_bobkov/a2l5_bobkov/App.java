@@ -76,10 +76,6 @@ public class App extends Application {
         return mDBController;
     }
 
-    public void setmDBController(DBController mDBController) {
-        App.mDBController = mDBController;
-    }
-
     public void setmNoteWithTitleList(ArrayList<NoteWithTitle> noteWithTitleList) {
         App.mNoteWithTitleList = noteWithTitleList;
     }

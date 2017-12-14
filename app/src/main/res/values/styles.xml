@@ -9,8 +9,8 @@
     </style>
 
     <style name="ButttonAdd" parent="AppTheme">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">@dimen/widget_bar_size</item>
+        <item name="android:layout_height">@dimen/widget_bar_size</item>
         <item name="android:layout_alignParentBottom">true</item>
         <item name="android:layout_alignParentRight">true</item>
         <item name="android:layout_gravity">bottom|end</item>
