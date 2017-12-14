@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/actionRem"
+        android:title="@string/remove"
+        android:orderInCategory="2"
+        android:contentDescription="@string/remove_the_item_from_the_list"
+        android:icon="@drawable/ic_remove_circle_outline_black_24dp"
+        app:showAsAction="ifRoom"
+        />
+
+    <item
+        android:id="@+id/actionOpen"
+        android:title="@string/open"
+        android:orderInCategory="3"
+        android:contentDescription="@string/open_the_item_of_the_list"
+        android:icon="@drawable/ic_open_in_browser_black_24dp"
+        app:showAsAction="ifRoom"
+        />
+
+    <item
+        android:id="@+id/actionEdit"
+        android:title="@string/edit"
+        android:orderInCategory="4"
+        android:contentDescription="@string/edit_the_note_from_the_list"
+        android:icon="@drawable/ic_edit_black_24dp"
+        app:showAsAction="ifRoom"
+        />
+
+</menu>

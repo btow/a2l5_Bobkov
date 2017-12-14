@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="activity_horizontal_margin">7dp</dimen>
+    <dimen name="list_view_item_text_size">28sp</dimen>
+    <dimen name="fa_add_margin">18sp</dimen>
+</resources>

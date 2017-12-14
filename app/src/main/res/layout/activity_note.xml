@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/llNote"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.lesson.vv_bobkov.a2l5_bobkov.NoteActivity"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/etNotesTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/input_the_notes_title"
+        android:visibility="visible"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:maxLines="3"
+        android:scrollbars="vertical"
+        android:scrollbarStyle="insideInset"
+        />
+
+    <EditText
+        android:id="@+id/etNotesAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/input_the_notes_address"
+        android:visibility="visible"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:maxLines="3"
+        android:scrollbars="vertical"
+        android:scrollbarStyle="insideInset"
+        />
+
+    <EditText
+        android:id="@+id/etNotesText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/input_the_notes_text"
+        android:visibility="visible"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:maxLines="7"
+        android:scrollbars="vertical"
+        android:scrollbarStyle="insideInset"
+        />
+
+    <TextView
+        android:id="@+id/tvTitleOfNote"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:maxLines="3"
+        android:scrollbars="vertical"
+        android:scrollbarStyle="insideInset"
+        />
+
+    <TextView
+        android:id="@+id/tvAddressOfNote"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:maxLines="3"
+        android:scrollbars="vertical"
+        android:scrollbarStyle="insideInset"
+        android:onClick="onClickMap"
+        />
+
+    <TextView
+        android:id="@+id/tvNotesText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:maxLines="7"
+        android:scrollbars="vertical"
+        android:scrollbarStyle="insideInset"
+        />
+
+    <LinearLayout
+        android:id="@+id/llButtons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        >
+
+        <Button
+            android:id="@+id/btnOk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ok"
+            />
+
+        <Button
+            android:id="@+id/btnCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cancel"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>
