@@ -5,38 +5,51 @@ import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
+import android.os.Bundle;
+import android.view.View;
 import android.widget.RemoteViews;
+
+import com.lesson.vv_bobkov.a2l5_bobkov.Exceptions.DBCursorIsEmptyException;
+import com.lesson.vv_bobkov.a2l5_bobkov.Exceptions.DBCursorIsNullExceptions;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Implementation of App Widget functionality.
  */
 public class NoteAppWidgetProvider extends AppWidgetProvider {
 
-    static final String ACTION_ON_CLICK = "com.lesson.vv_bobkov.a2l5_bobkov.itemonclick";
+    static final String ACTION_ON_CLICK = "com.lesson.vv_bobkov.a2l5_bobkov.item_on_click";
     static final String ITEM_POSITION = "item_position";
-    private App mApp;
+    static List<NoteWithTitle> mNoteWithTitleList;
+    static App mApp;
 
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
 
         // Construct the RemoteViews object
-        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.note_app_widget);
+        RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.note_app_widget);
+        // Setting the visibility of views
+        if (mNoteWithTitleList.size() > 0) {
+            remoteViews.setViewVisibility(R.id.tvAppwidget, View.GONE);
+            remoteViews.setViewVisibility(R.id.lvAppWidget, View.VISIBLE);
+        } else {
+            remoteViews.setViewVisibility(R.id.tvAppwidget, View.VISIBLE);
+            remoteViews.setViewVisibility(R.id.lvAppWidget, View.GONE);
+        }
+        // Opening of NoteActivity for writing of the new note
+        Intent newNoteWithTitle = new Intent(context, NoteActivity.class);
+        App.NOTES_MODE = App.NOTES_MODE_EDIT;
+        newNoteWithTitle.setAction(AppWidgetManager.ACTION_APPWIDGET_BIND);
+        newNoteWithTitle.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+        PendingIntent pendingIntent = PendingIntent.getActivity(
+                context, appWidgetId, newNoteWithTitle, 0);
+        remoteViews.setOnClickPendingIntent(R.id.btnWidgetTitle, pendingIntent);
 
-        Intent adapter = new Intent(context, NotesWidgetService.class);
-        adapter.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-        Uri data = Uri.parse(adapter.toUri(Intent.URI_INTENT_SCHEME));
-        adapter.setData(data);
-        views.setRemoteAdapter(R.id.lvAppWidget, adapter);
-
-        Intent listClickIntent = new Intent(context, NoteAppWidgetProvider.class);
-        listClickIntent.setAction(ACTION_ON_CLICK);
-        PendingIntent listClickPIntent = PendingIntent.getBroadcast(context, 0,
-                listClickIntent, 0);
-        views.setPendingIntentTemplate(R.id.lvAppWidget, listClickPIntent);
 
         // Instruct the widget manager to update the widget
-        appWidgetManager.updateAppWidget(appWidgetId, views);
+        appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
         appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId,
                 R.id.lvAppWidget);
     }
@@ -46,6 +59,24 @@ public class NoteAppWidgetProvider extends AppWidgetProvider {
         // There may be multiple widgets active, so update all of them
         super.onUpdate(context, appWidgetManager, appWidgetIds);
         mApp = App.getmApp();
+        // Reade the data from DB
+        if (mApp.getmNoteWithTitleList() == null) {
+            try {
+                mNoteWithTitleList = NotesTable.createNoteWithTitleArrayListFromBd(mApp.getmDBController().getmSqLiteDatabase());
+            } catch (DBCursorIsEmptyException e) {
+                mNoteWithTitleList = new ArrayList<>();
+            } catch (DBCursorIsNullExceptions e1) {
+                e1.printStackTrace();
+            }
+        } else {
+            mNoteWithTitleList = mApp.getmNoteWithTitleList();
+        }
+        if (mApp.selectedItemsIsEmpty()) {
+            mApp.createmSelectedItems();
+        } else {
+            mApp.getmSelectedItems().clear();
+        }
+
         for (int appWidgetId : appWidgetIds) {
             updateAppWidget(context, appWidgetManager, appWidgetId);
         }
@@ -54,17 +85,6 @@ public class NoteAppWidgetProvider extends AppWidgetProvider {
     @Override
     public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
-        AppWidgetManager widgetManager = AppWidgetManager.getInstance(context);
-        if (intent.getAction().equalsIgnoreCase(ACTION_ON_CLICK)) {
-            int itemPos = intent.getIntExtra(ITEM_POSITION, -1);
-            if (itemPos != -1) {
-                mApp.getmApp().addSelectedItem(itemPos, mApp.getmApp().getmNoteWithTitleList().get(itemPos));
-                Intent noteActivity = new Intent(context, NoteActivity.class);
-                mApp.NOTES_MODE = mApp.NOTES_MODE_EDIT;
-                context.startActivity(noteActivity);
-                return;
-            }
-        }
     }
 
     @Override

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Расчёт размера по формуле (70 х количество ячеек) - 30 -->
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
     android:initialLayout="@layout/note_app_widget"
-    android:minHeight="80dp"
-    android:minWidth="40dp"
+    android:minHeight="180dp"
+    android:minWidth="120dp"
     android:previewImage="@drawable/preview_image_port"
     android:resizeMode="horizontal|vertical"
     android:updatePeriodMillis="86400000"

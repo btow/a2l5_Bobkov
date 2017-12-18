@@ -1,8 +1,10 @@
 package com.lesson.vv_bobkov.a2l5_bobkov;
 
+import android.appwidget.AppWidgetManager;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -35,10 +37,32 @@ public class NoteActivity extends AppCompatActivity implements View.OnClickListe
     Button btnCancel;
 
     private App mApp = App.getmApp();
+    int widgetID = AppWidgetManager.INVALID_APPWIDGET_ID;
+    Intent resultValue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // извлекаем ID конфигурируемого виджета
+        Intent intent = getIntent();
+        Bundle extras = intent.getExtras();
+        if (extras != null) {
+            widgetID = extras.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID,
+                    AppWidgetManager.INVALID_APPWIDGET_ID);
+        }
+        // и проверяем его корректность
+        if (widgetID == AppWidgetManager.INVALID_APPWIDGET_ID) {
+            finish();
+        }
+
+        // формируем intent ответа
+        resultValue = new Intent();
+        resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetID);
+
+        // отрицательный ответ
+        setResult(RESULT_CANCELED, resultValue);
+
         setContentView(R.layout.activity_note);
 
         ButterKnife.bind(this);
@@ -105,6 +129,8 @@ public class NoteActivity extends AppCompatActivity implements View.OnClickListe
                         e.printStackTrace();
                     }
                     newNoteWithTitle.setmId(id);
+                    NoteAppWidgetProvider.updateAppWidget(
+                            this, AppWidgetManager.getInstance(this), widgetID);
                     mApp.addNewNoteToNoteWithTitleList(newNoteWithTitle);
                 } else {
 

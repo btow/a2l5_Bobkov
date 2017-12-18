@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -28,24 +27,25 @@ public class App extends Application {
     static final boolean
             NOTES_MODE_OPEN = true,
             NOTES_MODE_EDIT = false;
-    static boolean NOTES_MODE = false;
     /**
      * To specify the opening mode of the AttentionDialog
      */
     static final int
             WHITOUT_BUTTON = 0,
             WITH_TO_RETRY = 1;
-    private boolean resultAttentionDialog = false;
-
+    static boolean NOTES_MODE = false;
     private static App mApp;
     private static Menu mMenu;
     private static DBController mDBController;
-
+    private static ArrayList<NoteWithTitle> mNoteWithTitleList = null;
+    private static HashMap<Integer, NoteWithTitle> mSelectedItems;
+    private boolean resultAttentionDialog = false;
     private TextView mTvNotesNo;
     private ListView mLvNotes;
 
-    private static ArrayList<NoteWithTitle> mNoteWithTitleList = null;
-    private static HashMap<Integer, NoteWithTitle> mSelectedItems;
+    public static App getmApp() {
+        return mApp;
+    }
 
     public boolean isResultAttentionDialog() {
         return resultAttentionDialog;
@@ -60,10 +60,6 @@ public class App extends Application {
         mDBController = new DBController(mApp);
     }
 
-    public static App getmApp() {
-        return mApp;
-    }
-
     public Menu getmMenu() {
         return mMenu;
     }
@@ -76,12 +72,12 @@ public class App extends Application {
         return mDBController;
     }
 
-    public void setmNoteWithTitleList(ArrayList<NoteWithTitle> noteWithTitleList) {
-        App.mNoteWithTitleList = noteWithTitleList;
-    }
-
     public List<NoteWithTitle> getmNoteWithTitleList() {
         return mNoteWithTitleList;
+    }
+
+    public void setmNoteWithTitleList(ArrayList<NoteWithTitle> noteWithTitleList) {
+        App.mNoteWithTitleList = noteWithTitleList;
     }
 
     public boolean mNoteWithTitleListIsEmpty() {
@@ -89,11 +85,12 @@ public class App extends Application {
         if (mNoteWithTitleList == null) {
             mNoteWithTitleList = new ArrayList<>();
         }
-            if (mNoteWithTitleList.size() == 0) return true;
+        if (mNoteWithTitleList.size() == 0) return true;
         return false;
     }
 
     public void addNewNoteToNoteWithTitleList(NoteWithTitle noteWithTitle) {
+        boolean isEmpty = mNoteWithTitleListIsEmpty();
         mNoteWithTitleList.add(noteWithTitle);
     }
 
