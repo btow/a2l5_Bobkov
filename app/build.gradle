@@ -30,9 +30,11 @@ def butterKnife = '8.8.1'
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "com.android.support:appcompat-v7:$support"
-    compile "com.android.support:design:$support"
-    compile "com.jakewharton:butterknife:$butterKnife"
+    implementation "com.android.support:design:$support"
+
+    implementation "com.jakewharton:butterknife:$butterKnife"
     annotationProcessor "com.jakewharton:butterknife-compiler:$butterKnife"
+
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'

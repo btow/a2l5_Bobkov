@@ -4,12 +4,11 @@ import android.appwidget.AppWidgetManager;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
-import android.provider.ContactsContract;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatEditText;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import java.util.Map;
@@ -19,12 +18,12 @@ import butterknife.ButterKnife;
 
 public class NoteActivity extends AppCompatActivity implements View.OnClickListener {
 
-    @BindView(R.id.etNotesTitle)
-    EditText etNotesTitle;
-    @BindView(R.id.etNotesAddress)
-    EditText etNotesAddress;
-    @BindView(R.id.etNotesText)
-    EditText etNotesText;
+    @BindView(R.id.acetNotesTitle)
+    AppCompatEditText acetNotesTitle;
+    @BindView(R.id.acetNotesAddress)
+    AppCompatEditText acetNotesAddress;
+    @BindView(R.id.acetNotesText)
+    AppCompatEditText acetNotesText;
     @BindView(R.id.tvTitleOfNote)
     TextView tvTitleOfNote;
     @BindView(R.id.tvAddressOfNote)
@@ -35,10 +34,9 @@ public class NoteActivity extends AppCompatActivity implements View.OnClickListe
     Button btnOk;
     @BindView(R.id.btnCancel)
     Button btnCancel;
-
-    private App mApp = App.getmApp();
     int widgetID = AppWidgetManager.INVALID_APPWIDGET_ID;
     Intent resultValue;
+    private App mApp = App.getmApp();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +50,9 @@ public class NoteActivity extends AppCompatActivity implements View.OnClickListe
                     AppWidgetManager.INVALID_APPWIDGET_ID);
         }
         // и проверяем его корректность
-        if (widgetID == AppWidgetManager.INVALID_APPWIDGET_ID) {
+        if (
+                widgetID != 0 &&
+                        widgetID == AppWidgetManager.INVALID_APPWIDGET_ID) {
             finish();
         }
 
@@ -71,9 +71,9 @@ public class NoteActivity extends AppCompatActivity implements View.OnClickListe
         btnCancel.setOnClickListener(this);
 
         if (App.NOTES_MODE) {
-            etNotesTitle.setVisibility(View.GONE);
-            etNotesAddress.setVisibility(View.GONE);
-            etNotesText.setVisibility(View.GONE);
+            acetNotesTitle.setVisibility(View.GONE);
+            acetNotesAddress.setVisibility(View.GONE);
+            acetNotesText.setVisibility(View.GONE);
             btnOk.setVisibility(View.GONE);
 
             for (Map.Entry<Integer, NoteWithTitle> currentSelectedItem :
@@ -96,9 +96,9 @@ public class NoteActivity extends AppCompatActivity implements View.OnClickListe
                 for (Map.Entry<Integer, NoteWithTitle> selectedItem :
                         mApp.getmSelectedItems().entrySet()) {
 
-                    etNotesTitle.setText(selectedItem.getValue().getmTitle());
-                    etNotesAddress.setText(selectedItem.getValue().getmAddress());
-                    etNotesText.setText(selectedItem.getValue().getmNote());
+                    acetNotesTitle.setText(selectedItem.getValue().getmTitle());
+                    acetNotesAddress.setText(selectedItem.getValue().getmAddress());
+                    acetNotesText.setText(selectedItem.getValue().getmNote());
                 }
             }
         }
@@ -116,9 +116,9 @@ public class NoteActivity extends AppCompatActivity implements View.OnClickListe
                 if (mApp.selectedItemsIsEmpty()) {
                     NoteWithTitle newNoteWithTitle =
                             new NoteWithTitle(
-                                    etNotesTitle.getText().toString(),
-                                    etNotesAddress.getText().toString(),
-                                    etNotesText.getText().toString()
+                                    acetNotesTitle.getText().toString(),
+                                    acetNotesAddress.getText().toString(),
+                                    acetNotesText.getText().toString()
                             );
                     long id = -1;
                     try {
@@ -136,9 +136,9 @@ public class NoteActivity extends AppCompatActivity implements View.OnClickListe
 
                     for (Map.Entry<Integer, NoteWithTitle> currentSelectedItem :
                             mApp.getmSelectedItems().entrySet()) {
-                        currentSelectedItem.getValue().setmTitle(etNotesTitle.getText().toString());
-                        currentSelectedItem.getValue().setmAddress(etNotesAddress.getText().toString());
-                        currentSelectedItem.getValue().setmNote(etNotesText.getText().toString());
+                        currentSelectedItem.getValue().setmTitle(acetNotesTitle.getText().toString());
+                        currentSelectedItem.getValue().setmAddress(acetNotesAddress.getText().toString());
+                        currentSelectedItem.getValue().setmNote(acetNotesText.getText().toString());
                         try {
                             NotesTable.updateRecord(mApp.getmDBController().getmSqLiteDatabase(),
                                     currentSelectedItem.getValue());

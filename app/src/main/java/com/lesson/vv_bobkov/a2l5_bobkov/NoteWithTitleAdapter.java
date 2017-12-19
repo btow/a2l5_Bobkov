@@ -2,6 +2,7 @@ package com.lesson.vv_bobkov.a2l5_bobkov;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,14 +24,14 @@ import static com.lesson.vv_bobkov.a2l5_bobkov.R.color.colorWithe;
 
 class NoteWithTitleAdapter extends BaseAdapter {
 
-    private Context mCxt;
-    private App mApp;
-    private LayoutInflater layoutInflater;
-
     @BindView(R.id.tvNotesTitle)
     TextView tvNotesTitle;
     @BindView(R.id.llRowse)
     LinearLayout llRowse;
+    private Context mCxt;
+    private App mApp;
+    private LayoutInflater layoutInflater;
+    private SelectDialog selectDialog;
 
     NoteWithTitleAdapter(Context cxt, App app) {
 
@@ -43,7 +44,7 @@ class NoteWithTitleAdapter extends BaseAdapter {
         } catch (Exception e) {
             app.setmNoteWithTitleList(new ArrayList<NoteWithTitle>());
         }
-
+        selectDialog = new SelectDialog(cxt);
     }
 
     @Override
@@ -93,6 +94,19 @@ class NoteWithTitleAdapter extends BaseAdapter {
                     mApp.addSelectedItem(
                             i, mApp.getmNoteWithTitleList().get(i)
                     );
+                    Intent intent = new Intent(mCxt, NoteActivity.class);
+
+                    switch (selectDialog.showDialig()) {
+                        case EDIT:
+                            mApp.NOTES_MODE = mApp.NOTES_MODE_EDIT;
+                            break;
+                        case OPEN:
+                            mApp.NOTES_MODE = mApp.NOTES_MODE_OPEN;
+                            break;
+                        default:
+                            break;
+                    }
+                    mCxt.startActivity(intent);
                 }
                 notifyDataSetChanged();
                 mApp.prepareMenu(mApp.getmMenu());
