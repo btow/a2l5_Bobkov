@@ -22,18 +22,36 @@ import java.util.List;
 public class App extends Application {
 
     /**
-     * To specify the mode for opening a note activity
-     */
-    static final boolean
-            NOTES_MODE_OPEN = true,
-            NOTES_MODE_EDIT = false;
-    /**
      * To specify the opening mode of the AttentionDialog
      */
     static final int
             WHITOUT_BUTTON = 0,
             WITH_TO_RETRY = 1;
-    static boolean NOTES_MODE = false;
+
+    /**
+     * To specify the mode for opening a note activity
+     */
+    static boolean NOTES_MODE;
+
+    /**
+     * The specify variants of mode for opening a note activity
+     */
+    static final boolean
+            OPEN = true,
+            EDIT = false;
+
+    /**
+     * To specify the source of the note activity call
+     */
+    static boolean START_FROM;
+
+    /**
+     * Determine the source options for opening a note
+     */
+    static final boolean
+            ACTIVITY = false,
+            WIDGET = true;
+
     private static App mApp;
     private static Menu mMenu;
     private static DBController mDBController;
@@ -57,6 +75,8 @@ public class App extends Application {
         if (mApp == null) {
             mApp = this;
         }
+        NOTES_MODE = OPEN;
+        START_FROM = ACTIVITY;
         mDBController = new DBController(mApp);
     }
 

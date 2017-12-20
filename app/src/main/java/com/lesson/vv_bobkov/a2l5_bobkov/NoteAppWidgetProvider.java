@@ -5,7 +5,6 @@ import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.RemoteViews;
 
@@ -38,13 +37,18 @@ public class NoteAppWidgetProvider extends AppWidgetProvider {
             remoteViews.setViewVisibility(R.id.tvAppwidget, View.VISIBLE);
             remoteViews.setViewVisibility(R.id.lvAppWidget, View.GONE);
         }
+        mApp = App.getmApp();
+        mApp.NOTES_MODE = mApp.EDIT;
+        mApp.createmSelectedItems();
+
         // Opening of NoteActivity for writing of the new note
         Intent newNoteWithTitle = new Intent(context, NoteActivity.class);
-        App.NOTES_MODE = App.NOTES_MODE_EDIT;
+
         newNoteWithTitle.setAction(AppWidgetManager.ACTION_APPWIDGET_BIND);
         newNoteWithTitle.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
         PendingIntent pendingIntent = PendingIntent.getActivity(
                 context, appWidgetId, newNoteWithTitle, 0);
+        App.START_FROM = App.WIDGET;
         remoteViews.setOnClickPendingIntent(R.id.btnWidgetTitle, pendingIntent);
 
 

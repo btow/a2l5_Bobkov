@@ -98,10 +98,10 @@ class NoteWithTitleAdapter extends BaseAdapter {
 
                     switch (selectDialog.showDialig()) {
                         case EDIT:
-                            mApp.NOTES_MODE = mApp.NOTES_MODE_EDIT;
+                            mApp.NOTES_MODE = mApp.EDIT;
                             break;
                         case OPEN:
-                            mApp.NOTES_MODE = mApp.NOTES_MODE_OPEN;
+                            mApp.NOTES_MODE = mApp.OPEN;
                             break;
                         default:
                             break;

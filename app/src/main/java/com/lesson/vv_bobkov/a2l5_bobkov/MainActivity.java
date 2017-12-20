@@ -117,6 +117,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean onClickMenuItem(MenuItem item, App app) {
 
         Intent intent = new Intent(this, NoteActivity.class);
+        App.START_FROM = App.ACTIVITY;
 
         switch (item.getItemId()) {
 
@@ -142,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
 
                 if (!app.selectedItemsIsEmpty()) {
 
-                    app.NOTES_MODE = app.NOTES_MODE_OPEN;
+                    app.NOTES_MODE = app.OPEN;
                     startActivity(intent);
                     return true;
                 }
@@ -152,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
 
                 if (!app.selectedItemsIsEmpty()) {
 
-                    app.NOTES_MODE = app.NOTES_MODE_EDIT;
+                    app.NOTES_MODE = app.EDIT;
                     startActivity(intent);
                     return true;
                 }
@@ -163,13 +164,14 @@ public class MainActivity extends AppCompatActivity {
     public void onClickAdd(View view) {
 
         Intent intent = new Intent(this, NoteActivity.class);
-        App.NOTES_MODE = App.NOTES_MODE_EDIT;
+        App.NOTES_MODE = App.EDIT;
 
         if (mApp.selectedItemsIsEmpty()) {
             mApp.createmSelectedItems();
         } else {
             mApp.getmSelectedItems().clear();
         }
+        App.START_FROM = App.ACTIVITY;
         startActivity(intent);
     }
 }

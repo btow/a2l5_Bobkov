@@ -51,7 +51,7 @@ public class NoteActivity extends AppCompatActivity implements View.OnClickListe
         }
         // и проверяем его корректность
         if (
-                widgetID != 0 &&
+                App.START_FROM &&
                         widgetID == AppWidgetManager.INVALID_APPWIDGET_ID) {
             finish();
         }
@@ -70,7 +70,7 @@ public class NoteActivity extends AppCompatActivity implements View.OnClickListe
         btnOk.setOnClickListener(this);
         btnCancel.setOnClickListener(this);
 
-        if (App.NOTES_MODE) {
+        if (App.NOTES_MODE) {   //OPEN
             acetNotesTitle.setVisibility(View.GONE);
             acetNotesAddress.setVisibility(View.GONE);
             acetNotesText.setVisibility(View.GONE);
@@ -90,7 +90,16 @@ public class NoteActivity extends AppCompatActivity implements View.OnClickListe
                 tvNotesText.setVisibility(View.VISIBLE);
                 tvNotesText.setText(currentSelectedItem.getValue().getmNote());
             }
-        } else {
+        } else {    //EDIT
+
+            tvTitleOfNote.setVisibility(View.GONE);
+            tvAddressOfNote.setVisibility(View.GONE);
+            tvNotesText.setVisibility(View.GONE);
+
+            acetNotesTitle.setVisibility(View.VISIBLE);
+            acetNotesAddress.setVisibility(View.VISIBLE);
+            acetNotesText.setVisibility(View.VISIBLE);
+            btnOk.setVisibility(View.VISIBLE);
 
             if (!mApp.selectedItemsIsEmpty()) {
                 for (Map.Entry<Integer, NoteWithTitle> selectedItem :
